@@ -348,13 +348,10 @@ def download_recordings(recording_id):
         app.logger.error(f'Error downloading recording: {e}')
         return jsonify({"error": str(e)})
 
-active_users = {}
-
 # Socket.IO event example: handling new agent status updates in real-time
 @socketio.on('connect')
 def handle_connect():
     print("Client connected")
-    active_users[user_id] = request.sid
     emit('message', {'data': 'Connected to Flask Server via Socket.IO!'})
 
 @socketio.on('disconnect')
@@ -473,6 +470,6 @@ def handle_group_message(data):
         }, broadcast=True)
     except Exception as e:
         print(f"Error handling chat message: {e}")
-        
+
 if __name__ == "__main__":
     socketio.run(app, host="0.0.0.0", port=5000, debug=True)

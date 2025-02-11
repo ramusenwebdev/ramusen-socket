@@ -1,0 +1,2 @@
+[console_scripts]
+swagger11-codegen = asyncswagger11.codegen:main

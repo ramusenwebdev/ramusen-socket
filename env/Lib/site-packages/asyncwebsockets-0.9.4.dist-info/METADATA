@@ -1,0 +1,60 @@
+Metadata-Version: 2.1
+Name: asyncwebsockets
+Version: 0.9.4
+Summary: A websocket library
+Home-page: https://github.com/Fuyukai/asyncwebsockets
+Author: Laura Dickinson
+Author-email: l@veriny.tf
+License: MIT
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python :: 3
+Classifier: Framework :: AsyncIO
+Classifier: Framework :: Trio
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved
+Classifier: Topic :: Internet :: WWW/HTTP
+Requires-Python: >=3.6
+License-File: LICENCE
+Requires-Dist: anyio (>=3.0)
+Requires-Dist: wsproto (>=1.0)
+Requires-Dist: yarl
+
+asyncwebsockets
+===============
+
+asyncwebsockets is an `anyio`_-compatible websocket client library.
+Thus it works with `curio`_, `trio`_, or ``asyncio``.
+
+
+Installation
+------------
+
+To install the latest stable version::
+
+    $ pip install asyncwebsockets
+
+To install the latest development version::
+
+    $ pip install git+https://github.com/Fuyukai/asyncwebsockets.git#egg=asyncwebsockets
+
+
+Basic Usage
+-----------
+
+.. code-block:: python3
+
+    import anyio
+    import asyncwebsockets
+
+    async def test():
+        async with asyncwebsockets.open_websocket("wss://echo.websocket.org") as ws:
+            await ws.send("test")
+            evt = await ws.next_event()
+            print(type(evt), getattr(evt, 'data', None))
+
+
+    anyio.run(test)
+
+.. _curio: https://curio.readthedocs.io/en/latest/
+.. _trio: https://trio.readthedocs.io/en/latest/
+.. _anyio: https://anyio.readthedocs.io/en/latest/

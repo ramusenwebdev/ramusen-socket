@@ -391,6 +391,9 @@ def handle_chat_message(data):
         message = data.get('message', '')
         username = data.get('username')
         image_data = data.get('image_url')
+        read_at = data.get('read_at')
+        created_at = data.get('created_at')
+
 
         print(f"Received message from {username} ({sender_id}) to {receiver_id}: {message} and {image_data}")
 
@@ -422,7 +425,8 @@ def handle_chat_message(data):
             'receiver_id': receiver_id,
             'message': message,
             'username': username,
-            'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            'created_at': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            'read_at': None,
             'image_url': image_url
         }, broadcast=True)
     except Exception as e:

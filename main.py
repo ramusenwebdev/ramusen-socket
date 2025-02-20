@@ -389,45 +389,15 @@ def handle_chat_message(data):
         sender_id = data.get('sender_id')
         receiver_id = data.get('receiver_id')
         message = data.get('message', '')
-        username = data.get('username')
-        image_data = data.get('image_url')
-        read_at = data.get('read_at')
-        created_at = data.get('created_at')
-
-
-        print(f"Received message from {username} ({sender_id}) to {receiver_id}: {message} and {image_data}")
-
-        image_url = None
-        if image_data:
-            print("Image data received, saving image...")
-            try:
-                # Check if image_data contains a comma (e.g., "data:image/png;base64,<base64_data>")
-                if ',' in image_data:
-                    # Split the metadata from the base64 data
-                    image_binary = base64.b64decode(image_data.split(',')[1])
-                else:
-                    # Assume image_data is already the base64-encoded data
-                    image_binary = base64.b64decode(image_data)
-
-                # Save the image
-                filename = f"{sender_id}_{datetime.now().strftime('%Y%m%d%H%M%S')}.png"
-                image_path = os.path.join(UPLOAD_FOLDER, filename)
-                with open(image_path, 'wb') as image_file:
-                    image_file.write(image_binary)
-                image_url = f"/{UPLOAD_FOLDER}/{filename}"
-                print(f"Image saved at {image_url}")
-            except Exception as e:
-                print(f"Error saving image: {e}")
-                image_url = None
+        image_url = data.get('image_url')
 
         emit('chat_message', {
             'sender_id': sender_id,
             'receiver_id': receiver_id,
             'message': message,
-            'username': username,
+            'image_url': image_url,
             'created_at': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
             'read_at': None,
-            'image_url': image_url
         }, broadcast=True)
     except Exception as e:
         print(f"Error handling chat message: {e}")@socketio.on('group_message')
@@ -440,28 +410,7 @@ def handle_group_message(data):
         receiver_id = data.get('receiver_id')
         message = data.get('message', '')
         username = data.get('username')
-        image_data = data.get('image_url')
-
-        print(f"Message from {username} in group {group_id} ({sender_id}): {message} {receiver_id}")
-
-        image_url = None
-        if image_data:
-            print("Image data received, saving image...")
-            try:
-                if ',' in image_data:
-                    image_binary = base64.b64decode(image_data.split(',')[1])
-                else:
-                    image_binary = base64.b64decode(image_data)
-
-                filename = f"{sender_id}_{datetime.now().strftime('%Y%m%d%H%M%S')}.png"
-                image_path = os.path.join(UPLOAD_FOLDER, filename)
-                with open(image_path, 'wb') as image_file:
-                    image_file.write(image_binary)
-                image_url = f"/{UPLOAD_FOLDER}/{filename}"
-                print(f"Image saved at {image_url}")
-            except Exception as e:
-                print(f"Error saving image: {e}")
-                image_url = None
+        image_url = data.get('image_url')
 
         emit('group_message', {
             'group_id': group_id,

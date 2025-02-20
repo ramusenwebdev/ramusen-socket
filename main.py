@@ -390,10 +390,12 @@ def handle_chat_message(data):
         receiver_id = data.get('receiver_id')
         message = data.get('message', '')
         image_url = data.get('image_url')
+        username = data.get('username')
 
         emit('chat_message', {
             'sender_id': sender_id,
             'receiver_id': receiver_id,
+            'username': username,
             'message': message,
             'image_url': image_url,
             'created_at': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),

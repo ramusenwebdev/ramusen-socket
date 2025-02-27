@@ -19,16 +19,22 @@ CORS(app, origins="*")  # Allow all origins (use your specific domain for better
 
 socketio = SocketIO(app, cors_allowed_origins="*")
 
-ASTERISK_HOST = "172.16.203.199"
+# ASTERISK_HOST = "172.16.203.199"
+# ASTERISK_PORT = 5038
+# ASTERISK_USERNAME = "ranatelapi"
+# ASTERISK_PASSWORD = "343aa1aefe4908885015295abd578b91"
+
+# Konfigurasi AMI
+ASTERISK_HOST = "srv469501.hstgr.cloud"
 ASTERISK_PORT = 5038
 ASTERISK_USERNAME = "ranatelapi"
 ASTERISK_PASSWORD = "343aa1aefe4908885015295abd578b91"
 
 # Konfigurasi AMI
-# ASTERISK_HOST = "srv469501.hstgr.cloud"
-# ASTERISK_PORT = 5038
-# ASTERISK_USERNAME = "ranatelapi"
-# ASTERISK_PASSWORD = "343aa1aefe4908885015295abd578b91"
+ASTERISK_HOST = "srv469501.hstgr.cloud"
+ASTERISK_PORT = 5038
+ASTERISK_USERNAME = "ranatelapi"
+ASTERISK_PASSWORD = "343aa1aefe4908885015295abd578b91"
 RECORDINGS_FOLDER = "/var/spool/asterisk/monitor/"
 
 
